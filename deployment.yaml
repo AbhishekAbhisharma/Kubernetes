@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: container-1
+        image: apache2-image:latest
+        ports:
+        - containerPort: 8080  # Specify the correct container port for container-2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080  # Replace with the target port of your application
+  type: LoadBalancer  # Use "LoadBalancer" instead of "Loadbalancer"
+
+
